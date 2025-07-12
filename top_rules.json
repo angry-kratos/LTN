@@ -1,0 +1,30 @@
+import json
+
+with open("rule_verification_results.json") as f:
+    results = json.load(f)
+
+top_rules = []
+for rule in results:
+    scores = rule.get("consistency_scores", [])
+    total = len(scores)
+    true_count = sum(1 for s in scores if s is True)
+    if total > 0:
+        score = true_count / total
+        top_rules.append({
+            "rule": rule["rule"],
+            "consistency": score,
+            "true_count": true_count,
+            "total": total
+        })
+
+# Sort by consistency descending
+top_rules.sort(key=lambda x: x["consistency"], reverse=True)
+
+# Print top 5
+print("✅ Top 5 Rules by Consistency:\n")
+for r in top_rules[:5]:
+    print(f"{r['rule']} - Consistency: {r['consistency']:.2f} ({r['true_count']}/{r['total']})")
+
+# Save to JSON
+with open("top_rules.json", "w") as f:
+    json.dump(top_rules[:5], f, indent=2)

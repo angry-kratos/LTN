@@ -1,0 +1,14 @@
+[
+  [
+    "is_cube(X) \u2190 is_red(X)",
+    0.0
+  ],
+  [
+    "is_cube(X,Y) \u2190 is_red(X) \u2227 is_large(Y) \u2227 is_right_of(X,Y)",
+    0.0
+  ],
+  [
+    "is_cube(X,Y) \u2190 is_red(X,Z) \u2227 is_large(Z,Y) \u2227 is_right_of(X,Y)",
+    0.0
+  ]
+]

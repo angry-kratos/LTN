@@ -1,0 +1,8 @@
+[
+  {
+    "rule": "is_red(X) \u2190 is_cube(X)"
+  },
+  {
+    "rule": "is_blue(X,Y) \u2190 is_cube(X) \u2227 is_sphere(Y) \u2227 is_large(X)"
+  }
+]
