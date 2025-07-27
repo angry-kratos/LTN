@@ -113,6 +113,6 @@ for scene_idx, scene in enumerate(all_scenes):
     with open(out_path, "w") as fp:
         json.dump(scene_dict, fp, indent=2)
 
-    print(f"✓ Exported scene {scene_idx:04d} → {out_path}")
+    print(f"✓ Exported scene {scene_idx:04d} -> {out_path}")
 
 print(f"\n All {len(all_scenes)} scenes exported successfully to {OUT_DIR}")

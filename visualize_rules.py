@@ -46,8 +46,12 @@ class RuleVisualizer:
         """Highlight objects that satisfy the rule"""
         draw = ImageDraw.Draw(img)
         
-        # Parse rule to identify relevant objects
-        head, body = rule.split("←")
+        # Parse rule to identify relevant objects. Support either "<-" or the
+        # Unicode arrow for backward compatibility.
+        if "<-" in rule:
+            head, body = rule.split("<-")
+        else:
+            head, body = rule.split("\u2190")
         head = head.strip()
         body = body.strip()
         
@@ -79,14 +83,19 @@ class RuleVisualizer:
         """Determine which objects satisfy the rule"""
         satisfied_ids = []
         
-        # Parse rule to identify relevant objects
-        head, body = rule.split("←")
+        # Parse rule to identify relevant objects. Handle both ASCII and
+        # Unicode arrows.
+        if "<-" in rule:
+            head, body = rule.split("<-")
+        else:
+            head, body = rule.split("\u2190")
         head = head.strip()
         body = body.strip()
         
         # Get predicate names from rule
         predicates = set()
-        for part in [head] + body.split("∧"):
+        parts = body.split("&") if "&" in body else body.split("\u2227")
+        for part in [head] + parts:
             pred_name, _ = part.split("(")
             predicates.add(pred_name.strip())
         
