@@ -9,4 +9,4 @@ filtered = sorted(data, key=lambda x: sum(x['consistency_scores']) / len(x['cons
 top_rules = filtered[:5]  # Adjust the number of top rules you want
 for rule in top_rules:
     avg = sum(rule['consistency_scores']) / len(rule['consistency_scores'])
-    print(f"{rule['rule']} → Avg Score: {avg:.2f}")
+    print(f"{rule['rule']} -> Avg Score: {avg:.2f}")
