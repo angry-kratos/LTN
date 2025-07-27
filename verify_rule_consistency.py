@@ -74,10 +74,10 @@ def verify_rule_on_scenes():
     if inconsistent_scenes:
         print("\n⚠️ Example inconsistencies:")
         for scene, obj_id, pred in inconsistent_scenes[:5]:
-            print(f"  Scene: {scene}, Object ID: {obj_id} → Predicates: {pred}")
+            print(f"  Scene: {scene}, Object ID: {obj_id} -> Predicates: {pred}")
 
     # Save results
-    results = [{"rule": "is_red(X) ← is_cube(X)", "consistency_scores": all_scores}]
+    results = [{"rule": "is_red(X) <- is_cube(X)", "consistency_scores": all_scores}]
     with open("rule_verification_results.json", "w") as f:
         json.dump(results, f, indent=2)
 
