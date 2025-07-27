@@ -179,21 +179,25 @@ class RuleEvaluator:
             
             # Create rule
             head = f"{head_pred}(X)"
-            body = " ∧ ".join([f"{pred}(X)" for pred in body_preds])
-            rule = f"{head} ← {body}"
+            body = " & ".join([f"{pred}(X)" for pred in body_preds])
+            rule = f"{head} <- {body}"
             random_rules.append(rule)
         
         return random_rules
     
     def _check_rule_satisfaction(self, rule: str, scene: Dict) -> float:
         """Check if a rule is satisfied in a scene"""
-        head, body = rule.split("←")
+        if "<-" in rule:
+            head, body = rule.split("<-")
+        else:
+            head, body = rule.split("\u2190")
         head = head.strip()
         body = body.strip()
         
         # Get predicate names
         predicates = set()
-        for part in [head] + body.split("∧"):
+        parts = body.split("&") if "&" in body else body.split("\u2227")
+        for part in [head] + parts:
             pred_name, _ = part.split("(")
             predicates.add(pred_name.strip())
         
@@ -264,8 +268,9 @@ def evaluate_rules(rules_file: str, clevr_dir: str, output_dir: str):
         print("- Baseline comparison: ")
 
 if __name__ == "__main__":
+    clevr_dir = os.getenv("CLEVR_DIR", "CLEVR_v1.0")
     evaluate_rules(
         rules_file="rule_analysis.json",
-        clevr_dir="/Users/kargichauhan/Documents/Work/LTN/CLEVR_v1.0",
+        clevr_dir=clevr_dir,
         output_dir="evaluation_results"
     )

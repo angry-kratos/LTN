@@ -15,13 +15,15 @@ class RuleSynthesizer:
         templates = []
         
         # Unary rules
-        templates.append("head(X) ← body1(X)")
+        # Use ASCII symbols for portability across terminals. The arrow "<-" is
+        # interpreted as implication and "&" represents conjunction.
+        templates.append("head(X) <- body1(X)")
         
         # Binary spatial relations
-        templates.append("head(X,Y) ← body1(X) ∧ body2(Y) ∧ body3(X,Y)")
+        templates.append("head(X,Y) <- body1(X) & body2(Y) & body3(X,Y)")
         
         # Ternary relations
-        templates.append("head(X,Y) ← body1(X,Z) ∧ body2(Z,Y) ∧ body3(X,Y)")
+        templates.append("head(X,Y) <- body1(X,Z) & body2(Z,Y) & body3(X,Y)")
         
         return templates
     
@@ -30,14 +32,20 @@ class RuleSynthesizer:
         # Create variables
         vars = {f"{chr(88 + i)}": z3.Int(f"{chr(88 + i)}") for i in range(self.max_vars)}  # Use uppercase letters X, Y, Z
         
-        # Split template into head and body
-        head, body = template.split("←")
+        # Split template into head and body. Support both Unicode and ASCII
+        # arrows for backward compatibility.
+        if "<-" in template:
+            head, body = template.split("<-")
+        else:
+            head, body = template.split("\u2190")
         head = head.strip()
         body = body.strip()
         
         # Create Z3 expressions for each predicate
         body_exprs = []
-        for pred in body.split("∧"):
+        # Allow either "&" or the Unicode conjunction.
+        body_parts = body.split("&") if "&" in body else body.split("\u2227")
+        for pred in body_parts:
             pred = pred.strip()
             pred_name, var_names = pred.split("(")
             var_names = var_names.strip("()")

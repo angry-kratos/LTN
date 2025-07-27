@@ -17,9 +17,12 @@ from models.shape_net import ShapeNet
 from data_utils_clevr import load_clevr_scenes, extract_object_data_for_scene
 
 # ─── Configuration ──────────────────────────────────────────────────────────
-MODEL_DIR   = "models/"
-SCENES_JSON = "CLEVR_v1.0/scenes/CLEVR_val_scenes.json"
-OUT_DIR     = "data/groundings/"
+MODEL_DIR = "models/"
+# Allow overriding the CLEVR dataset path via the CLEVR_DIR environment
+# variable. This makes the script portable across operating systems.
+CLEVR_DIR = os.getenv("CLEVR_DIR", "CLEVR_v1.0")
+SCENES_JSON = os.path.join(CLEVR_DIR, "scenes", "CLEVR_val_scenes.json")
+OUT_DIR = "data/groundings/"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # ─── Load trained predicate networks ────────────────────────────────────────
@@ -110,6 +113,6 @@ for scene_idx, scene in enumerate(all_scenes):
     with open(out_path, "w") as fp:
         json.dump(scene_dict, fp, indent=2)
 
-    print(f"✓ Exported scene {scene_idx:04d} → {out_path}")
+    print(f"✓ Exported scene {scene_idx:04d} -> {out_path}")
 
 print(f"\n All {len(all_scenes)} scenes exported successfully to {OUT_DIR}")

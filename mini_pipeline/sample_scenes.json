@@ -1,0 +1,18 @@
+{
+  "scenes": [
+    {
+      "id": "0",
+      "objects": [
+        {"id": 1, "color": "red", "shape": "cube", "size": "small", "material": "rubber", "position": [1, 2]},
+        {"id": 2, "color": "blue", "shape": "sphere", "size": "large", "material": "metal", "position": [3, 2]}
+      ]
+    },
+    {
+      "id": "1",
+      "objects": [
+        {"id": 1, "color": "green", "shape": "cylinder", "size": "small", "material": "rubber", "position": [2, 1]},
+        {"id": 2, "color": "red", "shape": "cube", "size": "large", "material": "metal", "position": [4, 1]}
+      ]
+    }
+  ]
+}
