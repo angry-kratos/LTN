@@ -11,13 +11,13 @@ def get_project_root() -> Path:
     """Get the absolute path to the project root"""
     return Path(__file__).parent.absolute()
 
-def run_command(command: str, cwd: str = None) -> None:
-    """Run a command and print its output"""
-    print(f"\n=== Running: {command} ===")
+def run_command(command: list[str], cwd: str | None = None) -> None:
+    """Run a command list and print its output"""
+    print(f"\n=== Running: {' '.join(command)} ===")
     try:
         result = subprocess.run(
             command,
-            shell=True,
+            shell=False,
             capture_output=True,
             text=True,
             cwd=cwd
@@ -56,31 +56,31 @@ def main():
     
     # 1. Data Validation
     print("\n=== Step 1: Data Validation ===")
-    run_command("python3 validate_groundings.py", cwd=str(root))
+    run_command([sys.executable, "validate_groundings.py"], cwd=str(root))
     
     # 2. Rule Synthesis
     print("\n=== Step 2: Rule Synthesis ===")
-    run_command("python3 synthesize_rules.py", cwd=str(root))
+    run_command([sys.executable, "synthesize_rules.py"], cwd=str(root))
     
     # 3. Rule Verification
     print("\n=== Step 3: Rule Verification ===")
-    run_command("python3 verify_rule_consistency.py", cwd=str(root))
+    run_command([sys.executable, "verify_rule_consistency.py"], cwd=str(root))
     
     # 4. Rule Analysis
     print("\n=== Step 4: Rule Analysis ===")
-    run_command("python3 analyze_rules.py", cwd=str(root))
+    run_command([sys.executable, "analyze_rules.py"], cwd=str(root))
     
     # 5. Visualization
     print("\n=== Step 5: Visualization ===")
-    run_command("python3 visualize_rules.py", cwd=str(root))
+    run_command([sys.executable, "visualize_rules.py"], cwd=str(root))
     
     # 6. Evaluation
     print("\n=== Step 6: Evaluation ===")
-    run_command("python3 evaluate_rules.py", cwd=str(root))
+    run_command([sys.executable, "evaluate_rules.py"], cwd=str(root))
     
     # 7. Results Summary
     print("\n=== Step 7: Results Summary ===")
-    run_command("python3 summarize_results.py", cwd=str(root))
+    run_command([sys.executable, "summarize_results.py"], cwd=str(root))
     
     print("\n=== Pipeline Complete ===")
     print("Results are available in the following directories:")

@@ -173,9 +173,10 @@ def create_visualizations(rules_file: str, verification_file: str, clevr_dir: st
             print(f"Counterexample visualization saved to: {output_path}")
 
 if __name__ == "__main__":
+    clevr_dir = os.getenv("CLEVR_DIR", "CLEVR_v1.0")
     create_visualizations(
         rules_file="synthesized_rules.json",
         verification_file="rule_verification_results.json",
-        clevr_dir="/Users/kargichauhan/Documents/Work/LTN/CLEVR_v1.0",
+        clevr_dir=clevr_dir,
         output_dir="visualizations"
     )

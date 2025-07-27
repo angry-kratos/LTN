@@ -264,8 +264,9 @@ def evaluate_rules(rules_file: str, clevr_dir: str, output_dir: str):
         print("- Baseline comparison: ")
 
 if __name__ == "__main__":
+    clevr_dir = os.getenv("CLEVR_DIR", "CLEVR_v1.0")
     evaluate_rules(
         rules_file="rule_analysis.json",
-        clevr_dir="/Users/kargichauhan/Documents/Work/LTN/CLEVR_v1.0",
+        clevr_dir=clevr_dir,
         output_dir="evaluation_results"
     )

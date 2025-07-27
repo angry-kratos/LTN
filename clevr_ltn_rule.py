@@ -1,9 +1,14 @@
 import json
+import os
 import torch
 import ltn
 
-# Load CLEVR validation scenes
-with open("/Users/kargichauhan/Documents/Work/LTN/CLEVR_v1.0/scenes/CLEVR_val_scenes.json", "r") as f:
+# Load CLEVR validation scenes. The CLEVR dataset location can be provided via
+# the CLEVR_DIR environment variable. By default we look for a local
+# ``CLEVR_v1.0`` directory.
+clevr_dir = os.getenv("CLEVR_DIR", "CLEVR_v1.0")
+scenes_path = os.path.join(clevr_dir, "scenes", "CLEVR_val_scenes.json")
+with open(scenes_path, "r") as f:
     data = json.load(f)
 
 class RubberModelLearnable(torch.nn.Module):
